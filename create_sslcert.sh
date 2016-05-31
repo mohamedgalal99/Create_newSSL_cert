@@ -35,14 +35,17 @@ ays stop -n nginx    #used to stop nginx in JS7
 if [ -! -d $webserver_path/ssl ]
 then
     mkdir $webserver_path/ssl
-    cd $_
-else
-    cd /$webserver_path/ssl
 fi
-cp /etc/letsencrypt/archive/$environment/* .
+cd $webserver_path/ssl
+ln -s /etc/letsencrypt/archive/$environment/cert1.pem cert1.pem
+ln -s /etc/letsencrypt/archive/$environment/privkey1.pem privkey1.pem
+#cp /etc/letsencrypt/archive/$environment/* .
+cd /etc/letsencrypt/archive/$environment/
+cat fullchain1.pem cert1.pem | tee cert1.pem
 echo '[*] Certificate path /etc/nginx/ssl/cert1.pem'
 echo '[*] Certificate key /etc/nginx/ssl/privkey1.pem'
 
+#specified for my companey
 sed -i 's/\/opt\/nginx\/cfg\/ssl\/demo\.greenitglobe\.com\.crt/\/opt\/nginx\/cfg\/ssl\/cert1\.pem/g' /opt/nginx/cfg/sites-enabled/ovc
 sed -i 's/\/opt\/nginx\/cfg\/ssl\/demo\.greenitglobe\.com\.key/\/opt\/nginx\/cfg\/ssl\/privkey1\.pem/g' /opt/nginx/cfg/sites-enabled/ovc
 ays start -n nginx   #used to start nginx in JS7
