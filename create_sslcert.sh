@@ -5,6 +5,12 @@ then
    exit
 fi
 
+if [ -z $2 ]
+then
+   echo 'enter your mail'
+   exit
+fi
+
 if [ `dig $1 CNAME +short` ]
 then
    echo 'This Entry is CNAME in DNS, we accept A records only'
@@ -18,12 +24,13 @@ then
 fi
 
 environment=$1
+mail=$2
 mkdir /opt/nginx/letencrept
 cd $_
 wget https://dl.eff.org/certbot-auto
 chmod a+x ./certbot-auto
 ays stop -n nginx
-./certbot-auto certonly --standalone --email galalm@greenitglobe.com -d $environment -d ovs-$environment -d novnc-$environment -d defense-$environment
+./certbot-auto certonly --standalone --email $mail -d $environment -d ovs-$environment -d novnc-$environment -d defense-$environment
 mkdir /opt/nginx/cfg/ssl/new
 cd $_
 cp /etc/letsencrypt/archive/$environment/* .
