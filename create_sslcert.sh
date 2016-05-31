@@ -32,12 +32,13 @@ wget https://dl.eff.org/certbot-auto
 chmod a+x ./certbot-auto
 ays stop -n nginx    #used to stop nginx in JS7
 ./certbot-auto certonly --standalone --email $mail -d $environment -d ovs-$environment -d novnc-$environment -d defense-$environment
-if [ -! -d $webserver_path ]
+if [ -! -d $webserver_path/ssl ]
 then
-    mkdir $webserver_path
+    mkdir $webserver_path/ssl
     cd $_
 else
-    cd /$webserver_path
+    cd /$webserver_path/ssl
+fi
 cp /etc/letsencrypt/archive/$environment/* .
 echo '[*] Certificate path /etc/nginx/ssl/cert1.pem'
 echo '[*] Certificate key /etc/nginx/ssl/privkey1.pem'
