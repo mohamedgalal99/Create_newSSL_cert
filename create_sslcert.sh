@@ -25,15 +25,23 @@ fi
 
 environment=$1
 mail=$2
+webserver_path='/opt/nginx/cfg'
 mkdir /opt/nginx/letencrept
 cd $_
 wget https://dl.eff.org/certbot-auto
 chmod a+x ./certbot-auto
-ays stop -n nginx
+ays stop -n nginx    #used to stop nginx in JS7
 ./certbot-auto certonly --standalone --email $mail -d $environment -d ovs-$environment -d novnc-$environment -d defense-$environment
-mkdir /opt/nginx/cfg/ssl/new
-cd $_
+if [ -! -d $webserver_path ]
+then
+    mkdir $webserver_path
+    cd $_
+else
+    cd /$webserver_path
 cp /etc/letsencrypt/archive/$environment/* .
-sed -i 's/\/opt\/nginx\/cfg\/ssl\/demo\.greenitglobe\.com\.crt/\/opt\/nginx\/cfg\/ssl\/new\/cert1\.pem/g' /opt/nginx/cfg/sites-enabled/ovc
-sed -i 's/\/opt\/nginx\/cfg\/ssl\/demo\.greenitglobe\.com\.key/\/opt\/nginx\/cfg\/ssl\/new\/privkey1\.pem/g' /opt/nginx/cfg/sites-enabled/ovc
-ays start -n nginx
+echo '[*] Certificate path /etc/nginx/ssl/cert1.pem'
+echo '[*] Certificate key /etc/nginx/ssl/privkey1.pem'
+
+sed -i 's/\/opt\/nginx\/cfg\/ssl\/demo\.greenitglobe\.com\.crt/\/opt\/nginx\/cfg\/ssl\/cert1\.pem/g' /opt/nginx/cfg/sites-enabled/ovc
+sed -i 's/\/opt\/nginx\/cfg\/ssl\/demo\.greenitglobe\.com\.key/\/opt\/nginx\/cfg\/ssl\/privkey1\.pem/g' /opt/nginx/cfg/sites-enabled/ovc
+ays start -n nginx   #used to start nginx in JS7
