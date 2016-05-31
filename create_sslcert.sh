@@ -26,7 +26,7 @@ fi
 environment=$1
 mail=$2
 webserver_path='/opt/nginx/cfg'
-mkdir /opt/nginx/letencrept
+mkdir $webserver_path/letencrept
 cd $_
 wget https://dl.eff.org/certbot-auto
 chmod a+x ./certbot-auto
