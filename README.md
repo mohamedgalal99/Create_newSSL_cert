@@ -10,3 +10,6 @@ In line 34, change -d args to reflect ur domain
 ##Ex:
 - chmod +x create_sslcert.sh
 - ./create_sslcert.sh example.com admin@example.com
+## for wild ssl cert
+  ./certbot-auto certonly --manual -d *.demo.greenitglobe.com --agree-tos --manual-public-ip-logging-ok --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory
+  certbot renew --dry-run
