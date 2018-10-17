@@ -4,10 +4,10 @@
 - This create ssl certificate which valid for 90 day
 - Your domain must be registered and be A Record in DNS
 
-#Note
+# Note
 In line 34, change -d args to reflect ur domain
 
-##Ex:
+## Ex:
 > chmod +x create_sslcert.sh
 > ./create_sslcert.sh example.com admin@example.com
 # for wild ssl cert
